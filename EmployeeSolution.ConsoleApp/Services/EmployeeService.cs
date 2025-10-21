@@ -1,5 +1,6 @@
 ﻿using EmployeeSolution.ConsoleApp.Data;
 using EmployeeSolution.ConsoleApp.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace EmployeeSolution.ConsoleApp.Services;
 
@@ -7,6 +8,8 @@ public class EmployeeService
 {
     private readonly EmployeeDbContext _context;
 
+    //
+    // ctor 
     public EmployeeService(EmployeeDbContext context)
     {
         _context = context;
@@ -40,18 +43,28 @@ public class EmployeeService
     
     //
     // UPDATE
-    public int UpdateEmployeeById(int employeeId, string firstName, string lastName, string email, DateOnly dateOfBirth, decimal salary)
+    public int UpdateEmployeeById(int employeeId, string? firstName = null, string? lastName = null, string? email = null, DateOnly? dateOfBirth = null, decimal? salary = null)
     {
         var employee = _context.Employees.Find(employeeId);
-        if (employee != null)
-        {
+        if (employee == null)
+            return -1;
+        
+        if (!string.IsNullOrEmpty(firstName))
             employee.FirstName = firstName;
+        
+        if (!string.IsNullOrEmpty(lastName))
             employee.LastName = lastName;
+        
+        if (!string.IsNullOrEmpty(email))
             employee.Email = email;
-            employee.DateOfBirth = dateOfBirth;
-            employee.Salary = salary;
-            _context.SaveChanges();
-        }
+        
+        if (dateOfBirth != null)
+            employee.DateOfBirth = dateOfBirth.Value;
+        
+        if (salary != null)
+            employee.Salary = salary.Value;
+        
+        _context.SaveChanges();
         
         return employee.EmployeeId;
     }
