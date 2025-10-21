@@ -12,6 +12,8 @@ public class EmployeeService
         _context = context;
     }
 
+    //
+    // CREATE
     public int CreateEmployee(string firstName, string lastName, string email, DateOnly dateOfBirth, decimal salary)
     {
         var employee = new Employee
@@ -29,8 +31,28 @@ public class EmployeeService
         return employee.EmployeeId; 
     }
 
+    //
+    // GET ALL 
     public List<Employee> GetAllEmployees()
     {
         return _context.Employees.ToList();
+    }
+    
+    //
+    // UPDATE
+    public int UpdateEmployeeById(int employeeId, string firstName, string lastName, string email, DateOnly dateOfBirth, decimal salary)
+    {
+        var employee = _context.Employees.Find(employeeId);
+        if (employee != null)
+        {
+            employee.FirstName = firstName;
+            employee.LastName = lastName;
+            employee.Email = email;
+            employee.DateOfBirth = dateOfBirth;
+            employee.Salary = salary;
+            _context.SaveChanges();
+        }
+        
+        return employee.EmployeeId;
     }
 }

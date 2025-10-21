@@ -21,6 +21,8 @@ namespace EmployeeSolution.ConsoleApp
             //     Console.WriteLine(e.FirstName + " " + e.LastName + " " + e.Email + " " + e.DateOfBirth + " " + e.Salary);
             // }
             
+            // Console.WriteLine(employeeService.UpdateEmployeeById(1, "Vova", "Vovkin", "vov@gmail.com",  new DateOnly(2008, 4, 29) , 123456));
+
             
         }
     }
