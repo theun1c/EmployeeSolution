@@ -1,4 +1,7 @@
 ﻿using System;
+using EmployeeSolution.ConsoleApp.Models;
+using EmployeeSolution.ConsoleApp.Data;
+using EmployeeSolution.ConsoleApp.Services;
 
 namespace EmployeeSolution.ConsoleApp
 {
@@ -6,7 +9,13 @@ namespace EmployeeSolution.ConsoleApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            using var context = new EmployeeDbContext();
+            EmployeeService employeeService = new EmployeeService(context);
+
+
+            Console.WriteLine(employeeService.CreateEmployee("Vova", "Vovkin", "vov@gmail.com",  new DateOnly(2008, 4, 29) , 123456));
+
+            
         }
     }
 }
