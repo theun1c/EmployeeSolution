@@ -21,8 +21,10 @@ namespace EmployeeSolution.ConsoleApp
             //     Console.WriteLine(e.FirstName + " " + e.LastName + " " + e.Email + " " + e.DateOfBirth + " " + e.Salary);
             // }
             
-            Console.WriteLine(employeeService.UpdateEmployeeById( 2, firstName: "assssss", dateOfBirth: new DateOnly(2008, 4, 29) , salary: 121212 ));
+            // Console.WriteLine(employeeService.UpdateEmployeeById( 2, firstName: "assssss", dateOfBirth: new DateOnly(2008, 4, 29) , salary: 121212 ));
 
+            Console.WriteLine(employeeService.DeleteEmployee(1));
+            
             
         }
     }

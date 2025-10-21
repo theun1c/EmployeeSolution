@@ -42,7 +42,7 @@ public class EmployeeService
     }
     
     //
-    // UPDATE
+    // UPDATE :id
     public int UpdateEmployeeById(int employeeId, string? firstName = null, string? lastName = null, string? email = null, DateOnly? dateOfBirth = null, decimal? salary = null)
     {
         var employee = _context.Employees.Find(employeeId);
@@ -67,5 +67,19 @@ public class EmployeeService
         _context.SaveChanges();
         
         return employee.EmployeeId;
+    }
+    
+    //
+    // DELETE :id
+    public int DeleteEmployee(int employeeId)
+    {
+        var employee = _context.Employees.Find(employeeId);
+        if (employee == null)
+            return -1;
+        
+        _context.Employees.Remove(employee);
+        _context.SaveChanges();
+        
+        return employeeId;
     }
 }
