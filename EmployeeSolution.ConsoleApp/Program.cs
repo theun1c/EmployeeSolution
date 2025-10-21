@@ -7,25 +7,24 @@ namespace EmployeeSolution.ConsoleApp
 {
     internal class Program
     {
-        static void Main(string[] args)
+        private static void InitService()
         {
             using var context = new EmployeeDbContext();
             EmployeeService employeeService = new EmployeeService(context);
-
-
-            // Console.WriteLine(employeeService.CreateEmployee("Vova", "Vovkin", "vov@gmail.com",  new DateOnly(2008, 4, 29) , 123456));
-
-            // var employees = employeeService.GetAllEmployees();
-            // foreach (var e in employees)
-            // {
-            //     Console.WriteLine(e.FirstName + " " + e.LastName + " " + e.Email + " " + e.DateOfBirth + " " + e.Salary);
-            // }
-            
-            // Console.WriteLine(employeeService.UpdateEmployeeById( 2, firstName: "assssss", dateOfBirth: new DateOnly(2008, 4, 29) , salary: 121212 ));
-
-            Console.WriteLine(employeeService.DeleteEmployee(1));
-            
-            
+        }
+        
+        private static void Menu()
+        {
+            while (true)
+            {
+                
+            }
+        }
+        
+        static void Main(string[] args)
+        {
+            InitService();
+            Menu();
         }
     }
 }
