@@ -28,4 +28,9 @@ public class EmployeeService
         
         return employee.EmployeeId; 
     }
+
+    public List<Employee> GetAllEmployees()
+    {
+        return _context.Employees.ToList();
+    }
 }
