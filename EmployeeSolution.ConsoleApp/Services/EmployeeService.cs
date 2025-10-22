@@ -71,7 +71,7 @@ public class EmployeeService
     
     //
     // DELETE :id
-    public int DeleteEmployee(int employeeId)
+    public int DeleteEmployeeById(int employeeId)
     {
         var employee = _context.Employees.Find(employeeId);
         if (employee == null)
