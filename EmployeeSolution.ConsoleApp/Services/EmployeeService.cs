@@ -4,19 +4,23 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EmployeeSolution.ConsoleApp.Services;
 
+/// <summary>
+/// service with CRUD realisation
+/// </summary>
 public class EmployeeService
 {
+    // added db context
     private readonly EmployeeDbContext _context;
 
     //
-    // ctor 
+    // ctor with added context
     public EmployeeService(EmployeeDbContext context)
     {
         _context = context;
     }
 
     //
-    // CREATE
+    // CREATE EMP
     public int CreateEmployee(string firstName, string lastName, string email, DateOnly? dateOfBirth, decimal? salary)
     {
         var employee = new Employee
@@ -55,13 +59,15 @@ public class EmployeeService
         return _context.Employees.Where(x => x.Salary > avgSalary).ToList();
     }
 
+    //
+    // GET EMP :id
     public Employee GetEmployeeById(int employeeId)
     {
         return _context.Employees.FirstOrDefault(x => x.EmployeeId == employeeId);
     }
     
     //
-    // UPDATE :id
+    // UPDATE EMP :id
     public int UpdateEmployeeById(int? employeeId, string? firstName = null, string? lastName = null, string? email = null, DateOnly? dateOfBirth = null, decimal? salary = null)
     {
         var employee = _context.Employees.Find(employeeId);
@@ -92,15 +98,15 @@ public class EmployeeService
     }
     
     //
-    // DELETE :id
+    // DELETE EMP :id
     public bool DeleteEmployeeById(int employeeId)
     {
         var employee = GetEmployeeById(employeeId);
         if (employee == null)
-            return false; // Сотрудник не найден
+            return false; 
     
         _context.Employees.Remove(employee);
         _context.SaveChanges();
-        return true; // Успешно удален
+        return true;
     }
 }

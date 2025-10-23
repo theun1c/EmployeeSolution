@@ -5,6 +5,7 @@ using EmployeeSolution.ConsoleApp.Models;
 
 namespace EmployeeSolution.ConsoleApp.Data;
 
+// AUTO-gen DB context file
 public partial class EmployeeDbContext : DbContext
 {
     public EmployeeDbContext()

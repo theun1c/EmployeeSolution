@@ -7,6 +7,10 @@ namespace EmployeeSolution.ConsoleApp
 {
     internal class Program
     {
+        /// <summary>
+        /// ENTRY POINT TO THE PROJECT - ТОЧКА ВХОДА В ПРОЕКТ
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             var context = new EmployeeDbContext(); 

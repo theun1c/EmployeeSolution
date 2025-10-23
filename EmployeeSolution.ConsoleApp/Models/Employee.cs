@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace EmployeeSolution.ConsoleApp.Models;
 
+/// <summary>
+/// AUTO-gen model from DB
+/// </summary>
 public partial class Employee
 {
     public int EmployeeId { get; set; }

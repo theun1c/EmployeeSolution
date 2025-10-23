@@ -2,8 +2,12 @@
 
 namespace EmployeeSolution.ConsoleApp.Services;
 
+/// <summary>
+/// class for validation inputs 
+/// </summary>
 public class InputService
 {
+    // string validation 
     public string? GetStr(string textMessage, bool isRequired = true)
     {
         while (true)
@@ -32,6 +36,7 @@ public class InputService
         }
     }
 
+    // int validation
     public int? GetInt(string textMessage, bool isRequired = true)
     {
         while (true)
@@ -66,6 +71,7 @@ public class InputService
         }
     }
 
+    // decimal validation
     public decimal? GetDecimal(string textMessage, bool isRequired = true)
     {
         while (true)
@@ -99,6 +105,7 @@ public class InputService
         }
     }
 
+    // date validation
     public DateOnly? GetDateOnly(string textMessage, bool isRequired = true)
     {
         while (true)
@@ -137,6 +144,7 @@ public class InputService
         }
     }
 
+    // email validation helps method
     private bool IsEmail(string emailAddress)
     {
         if (string.IsNullOrWhiteSpace(emailAddress))
@@ -155,6 +163,7 @@ public class InputService
         }
     }
     
+    // email str validation
     public string GetEmail(string textMessage, bool isRequired = true)
     {
         
