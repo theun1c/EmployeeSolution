@@ -7,24 +7,21 @@ public class ConsoleMenu
 {
    
     private readonly EmployeeService _employeeService;
+    private readonly InputService _inputService;
 
-    public ConsoleMenu(EmployeeService employeeService)
+    public ConsoleMenu(EmployeeService employeeService, InputService inputService)
     {
         _employeeService = employeeService;
+        _inputService = inputService;
     }
     
      private void AddEmployee()
         {
-            Console.WriteLine("Enter first name: ");
-            string firstName = Console.ReadLine();
-            Console.WriteLine("Enter last name: ");
-            string lastName = Console.ReadLine();
-            Console.WriteLine("Enter email: ");
-            string email = Console.ReadLine();
-            Console.WriteLine("Enter date of birth: ");
-            DateOnly dateOfBirth = DateOnly.Parse(Console.ReadLine());
-            Console.WriteLine("Enter salary: ");
-            decimal salary = decimal.Parse(Console.ReadLine());
+            string firstName = _inputService.GetStr("Enter first name: ");
+            string lastName = _inputService.GetStr("Enter last name: ");
+            string email = _inputService.GetEmail("Enter email: ");
+            DateOnly? dateOfBirth = _inputService.GetDateOnly("Enter date of birth: ");
+            decimal? salary = _inputService.GetDecimal("Enter salary: ");
             
             _employeeService.CreateEmployee(firstName, lastName, email, dateOfBirth, salary);
 
@@ -44,34 +41,56 @@ public class ConsoleMenu
             Console.ReadKey();
         }
 
+        private void ViewEmployeesAVGSalaryCount()
+        {
+            var employees = _employeeService.GetEmploeesByAVGSalary();
+            Console.WriteLine("The number of employees with above-average salaries: " + employees.Count);
+            
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+        
         private void UpdateEmployeeById()
         {
-            Console.WriteLine("Enter employee ID: ");
-            int employeeId = int.Parse(Console.ReadLine());
-            Console.WriteLine("Enter first name: ");
-            string firstName = Console.ReadLine();
-            Console.WriteLine("Enter last name: ");
-            string lastName = Console.ReadLine();
-            Console.WriteLine("Enter email: ");
-            string email = Console.ReadLine();
-            Console.WriteLine("Enter date of birth: ");
             
-            DateOnly dateOfBirth = DateOnly.Parse(Console.ReadLine());
+            int? employeeId = _inputService.GetInt("Enter employee ID: ");
+            if (!employeeId.HasValue) return;
             
-            Console.WriteLine("Enter salary: ");
-            decimal salary = decimal.Parse(Console.ReadLine());
+            var employee = _employeeService.GetEmployeeById(employeeId.Value);
+            if (employee == null)
+            {
+                Console.WriteLine($"Employee with ID {employeeId} not found.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
             
-            _employeeService.UpdateEmployeeById( employeeId,  firstName, lastName, email, dateOfBirth, salary);
+            string firstName = _inputService.GetStr("Enter first name: ", false);
+            string lastName = _inputService.GetStr("Enter last name: ", false);
+            string email = _inputService.GetEmail("Enter email: ", false);
+            DateOnly? dateOfBirth = _inputService.GetDateOnly("Enter date of birth: ", false);
+            decimal? salary = _inputService.GetDecimal("Enter salary: ", false);
+            
+            _employeeService.UpdateEmployeeById( employeeId.Value,  firstName, lastName, email, dateOfBirth, salary);
             Console.WriteLine("Employee updates successfully.\nPress any key to continue...");
             Console.ReadKey();   
         }
 
         private void DeleteEmployeeById()
         {
-            Console.WriteLine("Enter employee ID: ");
-            int employeeId = int.Parse(Console.ReadLine());
+            int? employeeId = _inputService.GetInt("Enter employee ID: ");
+            if (!employeeId.HasValue) return;
             
-            _employeeService.DeleteEmployeeById(employeeId);
+            var employee = _employeeService.GetEmployeeById(employeeId.Value);
+            if (employee == null)
+            {
+                Console.WriteLine($"Employee with ID {employeeId} not found.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+            
+            _employeeService.DeleteEmployeeById(employeeId.Value);
             
             Console.WriteLine("Employee deleted successfully.\nPress any key to continue...");
             Console.ReadKey(); 
@@ -89,7 +108,8 @@ public class ConsoleMenu
                 Console.WriteLine("2. View all employees");
                 Console.WriteLine("3. Update Employee");
                 Console.WriteLine("4. Delete Employee");
-                Console.WriteLine("5. Exit");
+                Console.WriteLine("5. Print employee count by AVG salary");
+                Console.WriteLine("6. Exit");
                 Console.Write("\nSelect option: ");
 
                 switch (Console.ReadLine())
@@ -98,7 +118,8 @@ public class ConsoleMenu
                     case "2": ViewAllEmployees(); break;
                     case "3": UpdateEmployeeById(); break;
                     case "4": DeleteEmployeeById(); break;
-                    case "5": return;
+                    case "5": ViewEmployeesAVGSalaryCount(); break;
+                    case "6": return;
                 }
 
             }

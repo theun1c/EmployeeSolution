@@ -11,7 +11,8 @@ namespace EmployeeSolution.ConsoleApp
         {
             var context = new EmployeeDbContext(); 
             var employeeService = new EmployeeService(context);
-            var consoleMenu = new ConsoleMenu(employeeService);
+            var inputService = new InputService();
+            var consoleMenu = new ConsoleMenu(employeeService, inputService);
             consoleMenu.Menu();
         }
     }
