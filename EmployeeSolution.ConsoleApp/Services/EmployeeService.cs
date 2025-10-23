@@ -23,6 +23,12 @@ public class EmployeeService
     // CREATE EMP
     public int CreateEmployee(string firstName, string lastName, string email, DateOnly? dateOfBirth, decimal? salary)
     {
+        // unique email
+        if (_context.Employees.Any(e => e.Email.ToLower() == email.ToLower()))
+        {
+            return -1;
+        }
+        
         var employee = new Employee
         {
             FirstName = firstName,

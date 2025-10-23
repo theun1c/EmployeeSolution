@@ -27,10 +27,17 @@ public class ConsoleMenu
         string email = _inputService.GetEmail("Enter email: ");
         DateOnly? dateOfBirth = _inputService.GetDateOnly("Enter date of birth: ");
         decimal? salary = _inputService.GetDecimal("Enter salary: ");
-        
-        _employeeService.CreateEmployee(firstName, lastName, email, dateOfBirth, salary);
-        Console.WriteLine("Employee added successfully.\nPress any key to continue...");
-        Console.ReadKey();
+
+        if (_employeeService.CreateEmployee(firstName, lastName, email, dateOfBirth, salary) == -1)
+        {
+            Console.WriteLine("\nEmployee could not be created! Email not unique");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("Employee added successfully.\nPress any key to continue...");
+            Console.ReadKey();
+        }
     }
     
     // method for print all employees
