@@ -35,10 +35,19 @@ public class EmployeeService
     }
 
     //
-    // GET ALL 
+    // GET ALL EMP
     public List<Employee> GetAllEmployees()
     {
         return _context.Employees.ToList();
+    }
+    
+    //
+    // GET ALL EMP WITH HIGHT SALARY
+    public List<Employee> GetEmploeesByAVGSalary()
+    {
+        decimal salary = _context.Employees.Sum(x => x.Salary);
+        decimal avgSalary = salary / _context.Employees.Count();
+        return _context.Employees.Where(x => x.Salary > avgSalary).ToList();
     }
     
     //
