@@ -4,62 +4,133 @@ namespace EmployeeSolution.ConsoleApp.Services;
 
 public class InputService
 {
-    public string GetStr(string textMessage)
+    public string? GetStr(string textMessage, bool isRequired = true)
     {
         while (true)
         {
             Console.WriteLine(textMessage);
             
-            string input = Console.ReadLine();
-            
-            if (!string.IsNullOrWhiteSpace(input))
+            if (!isRequired)
             {
-                return input;
+                Console.WriteLine( " *optional parameter* " );
             }
+            
+            string input = Console.ReadLine()?.Trim();
 
-            Console.WriteLine("Pls try again. Incorrect input.");
+            if (!isRequired && string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+            
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Field is required");
+                continue;
+            }
+            
+            return input;
         }
     }
 
-    public int GetInt(string textMessage)
+    public int? GetInt(string textMessage, bool isRequired = true)
     {
         while (true)
         {
             Console.WriteLine(textMessage);
-            
-            if (int.TryParse(Console.ReadLine(), out int input) && (input >= 0 && input <= int.MaxValue))
+
+            if (!isRequired)
             {
-                return input;
+                Console.Write( "*optional parameter* ");
+            }
+            
+            string input = Console.ReadLine()?.Trim();
+
+
+            if (!isRequired && string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Field is required.");
+                continue;
+            }
+            
+            if (int.TryParse(input, out int result) && (result >= 0))
+            {
+                return result;
             }
 
             Console.WriteLine("Pls try again. Number needs to be between 0 and 2147483647.");
         }
     }
 
-    public decimal GetDecimal(string textMessage)
+    public decimal? GetDecimal(string textMessage, bool isRequired = true)
     {
         while (true)
         {
             Console.WriteLine(textMessage);
-
-            if (decimal.TryParse(Console.ReadLine(), out decimal input) && (input >= 0 && input <= decimal.MaxValue))
+            
+            if (!isRequired)
             {
-                return input;
+                Console.Write( " *optional parameter* " );
+            }
+            
+            string input = Console.ReadLine()?.Trim();
+
+            if (!isRequired && string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Field is required.");
+                continue;
+            }
+            
+            if (decimal.TryParse(input, out decimal number) && (number >= 0 && number <= decimal.MaxValue))
+            {
+                return number;
             }
             
             Console.WriteLine("Pls try again. Number needs to be positive decimal.");
         }
     }
 
-    public DateOnly GetDateOnly(string textMessage)
+    public DateOnly? GetDateOnly(string textMessage, bool isRequired = true)
     {
         while (true)
         {
             Console.WriteLine(textMessage);
 
-            if (DateOnly.TryParse(Console.ReadLine(), out DateOnly input))
+            if (!isRequired)
             {
-                return input;
+                Console.Write( "*optional parameter* " );
+            }
+
+            string input = Console.ReadLine()?.Trim();
+
+            if (!isRequired && string.IsNullOrWhiteSpace(input))
+            {
+                return null;
+            }
+            
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.WriteLine("Date is required.");
+                continue;
+            }
+            
+            if (DateOnly.TryParse(input, out DateOnly dateOnly))
+            {
+                if (dateOnly > DateOnly.FromDateTime(DateTime.Today))
+                {
+                    Console.WriteLine("Date cannot be in the future. Please enter a valid date.");
+                    continue;
+                }
+                return dateOnly;
             }
 
             Console.WriteLine("Pls try again. Date format is yyyy-MM-dd");
@@ -84,15 +155,25 @@ public class InputService
         }
     }
     
-    public string GetEmail(string textMessage)
+    public string GetEmail(string textMessage, bool isRequired = true)
     {
+        
         while (true)
         {
             Console.WriteLine(textMessage);
-            
+
+            if (!isRequired)
+            {
+                Console.Write( "*optional parameter* " );
+            }
             
             string input = Console.ReadLine();
 
+            if (!isRequired && string.IsNullOrWhiteSpace(input))
+            {
+                return string.Empty;
+            }
+            
             if (IsEmail(input))
             {
                 return input;
